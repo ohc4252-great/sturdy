@@ -1,1 +1,168 @@
-/* Add styles here */
+:root {
+    --primary-color: #4a90e2;
+    --success-color: #2ecc71;
+    --bg-color: #f5f7fa;
+    --card-bg: #ffffff;
+    --text-color: #333;
+    --border-radius: 12px;
+}
+
+body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 { color: var(--primary-color); }
+#cycle-display { font-weight: bold; font-size: 1.1rem; color: #555; }
+
+.container {
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+/* 패널 공통 스타일 */
+.todo-panel, .tree-panel {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    min-height: 500px;
+}
+
+.todo-panel { flex: 1; }
+.tree-panel { flex: 1.5; }
+
+h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+    font-size: 1.25rem;
+}
+
+/* 투두 리스트 아이템 */
+.todo-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 12px;
+}
+
+.todo-item:last-child { border-bottom: none; }
+
+.todo-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.todo-item span {
+    line-height: 1.4;
+}
+
+.todo-item.completed span {
+    text-decoration: line-through;
+    color: #999;
+}
+
+/* 아코디언 스타일 */
+.accordion-item {
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.accordion-header {
+    background: #fcfcfc;
+    padding: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+.accordion-header:hover { background: #f0f4f8; }
+
+.accordion-content {
+    display: none;
+    padding: 10px;
+    background: #fff;
+}
+
+.accordion-content.active { display: block; }
+
+/* 소단원 행 */
+.sub-chapter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.sub-chapter:last-child { border-bottom: none; }
+
+.status-badge {
+    font-size: 0.8rem;
+    padding: 3px 8px;
+    border-radius: 20px;
+    background: #eee;
+    margin-right: 10px;
+}
+
+.status-badge.ongoing { background: #e3f2fd; color: #1976d2; }
+.status-badge.done { background: #e8f5e9; color: #2e7d32; }
+
+button {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background: var(--primary-color);
+    color: white;
+    transition: background 0.3s;
+}
+
+button:hover { background: #357abd; }
+button:disabled { background: #ccc; cursor: default; }
+
+/* 모달 */
+.modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.hidden { display: none; }
+
+.modal-content {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    max-width: 400px;
+}
+
+.confetti { font-size: 4rem; display: block; margin-bottom: 20px; }
+
+@media (max-width: 900px) {
+    .container { flex-direction: column; }
+    .todo-panel, .tree-panel { width: 100%; }
+}

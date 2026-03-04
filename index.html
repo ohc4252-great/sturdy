@@ -1,14 +1,46 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수학 공부 기록기 (Math Tracker)</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <div id="app">
+        <header>
+            <h1>🔢 수학 공부 기록기</h1>
+            <div id="cycle-display">현재 <span id="cycle-count">1</span>회독 진행 중</div>
+        </header>
+
+        <main class="container">
+            <!-- 좌측: 오늘의 할 일 -->
+            <section class="todo-panel">
+                <h2>📅 오늘의 할 일</h2>
+                <div id="todo-list" class="list-container">
+                    <p class="empty-msg">오늘 할 일이 없습니다. 단원을 시작해 보세요!</p>
+                </div>
+            </section>
+
+            <!-- 우측: 전체 단원 목록 -->
+            <section class="tree-panel">
+                <h2>📚 전체 학습 단원</h2>
+                <div id="chapter-tree" class="accordion-container">
+                    <!-- JavaScript에서 렌더링됨 -->
+                </div>
+            </section>
+        </main>
+
+        <!-- 축하 모달 -->
+        <div id="modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="confetti">🎉</span>
+                <h2 id="modal-title">축하합니다!</h2>
+                <p id="modal-msg"></p>
+                <button id="modal-close">확인</button>
+            </div>
+        </div>
+    </div>
+    <script src="main.js"></script>
 </body>
 </html>
