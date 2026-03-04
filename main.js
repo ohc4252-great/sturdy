@@ -212,10 +212,20 @@ window.completeTask = function(id, stage) {
 };
 
 function checkAllComplete() {
-    const totalChapters = CHAPTER_DATA.reduce((acc, cat) => acc + cat.subs.length, 0);
-    const completedCount = Object.values(state.progress).filter(p => p.status === 'COMPLETED').length;
+    const isCategoryComplete = (categoryTitle) => {
+        const category = CHAPTER_DATA.find(cat => cat.title === categoryTitle);
+        if (!category) return false;
+        return category.subs.every(sub => {
+            const id = `${category.title} - ${sub}`;
+            return state.progress[id] && state.progress[id].status === 'COMPLETED';
+        });
+    };
 
-    if (completedCount === totalChapters) {
+    const su1Complete = isCategoryComplete("수1");
+    const su2Complete = isCategoryComplete("수2");
+    const electiveComplete = isCategoryComplete("확통") || isCategoryComplete("미적분") || isCategoryComplete("기하");
+
+    if (su1Complete && su2Complete && electiveComplete) {
         showModal();
     }
 }
