@@ -154,14 +154,24 @@ function renderTree() {
                 } else {
                     // 진행 중인 상태 표시
                     let stageLabel = "";
+                    const today = getTodayString();
+                    btnDisabled = true; // 기본적으로 비활성화
+
                     if (prog.status === 'START') stageLabel = "1일차 대기";
-                    else if (prog.status === 'DAY1_DONE') stageLabel = "2일차 대기";
-                    else if (prog.status === 'DAY2_DONE') stageLabel = "3일차 대기";
+                    else if (prog.status === 'DAY1_DONE') {
+                        stageLabel = "2일차 대기";
+                        // 1일차 완료 후 대기 중일 때 시작 버튼 활성화
+                        if (today <= prog.lastDate) btnDisabled = false;
+                    }
+                    else if (prog.status === 'DAY2_DONE') {
+                        stageLabel = "3일차 대기";
+                        // 2일차 완료 후 대기 중일 때 시작 버튼 활성화
+                        if (today <= prog.lastDate) btnDisabled = false;
+                    }
                     else if (prog.status === 'DAY3_DONE') stageLabel = "복습 대기";
                     
                     statusText = stageLabel;
                     badgeClass = 'ongoing';
-                    btnDisabled = true;
                 }
             }
 
@@ -183,7 +193,25 @@ function renderTree() {
 
 // 5. 동작 로직
 window.startChapter = function(id) {
-    if (state.progress[id]) return;
+    const prog = state.progress[id];
+    const today = getTodayString();
+
+    if (prog) {
+        // 1일차 또는 2일차가 완료된 상태에서 대기 중일 때 강제 시작
+        if ((prog.status === 'DAY1_DONE' || prog.status === 'DAY2_DONE') && today <= prog.lastDate) {
+            // lastDate를 어제로 설정하여 즉시 다음 단계가 나타나게 함
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const y = yesterday.getFullYear();
+            const m = String(yesterday.getMonth() + 1).padStart(2, '0');
+            const d = String(yesterday.getDate()).padStart(2, '0');
+            prog.lastDate = `${y}-${m}-${d}`;
+            saveState();
+            renderApp();
+        }
+        return;
+    }
+
     state.progress[id] = {
         status: 'START',
         lastDate: ''
